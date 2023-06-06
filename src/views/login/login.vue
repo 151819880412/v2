@@ -26,7 +26,10 @@ export default {
   props: {},
   data() {
     return {
-      loginFormData: {},
+      loginFormData: {
+        username:"1",
+        password:"qwe123"
+      },
       loginRules: {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },

@@ -6,7 +6,7 @@
  */
 const AppLayout = () => import('@/views/layout/AppLayout.vue');
 const DynamicRouting = () => import('@/views/router/dynamicRouting/dynamicRouting.vue');
-const RoutingJump = () => import('@/views/router/dynamicRouting/routingJump.vue');
+const RoutingJump = () => import('@/views/router/routingJump/routingJump.vue');
 const Home = () => import('@/views/home/home.vue');
 
 export default () => {
@@ -17,10 +17,11 @@ export default () => {
           path: '/',
           name: 'Home',
           redirect: 'home',
-      //       icon: "el-icon-location",
           component: AppLayout,
           meta: {
             title: '首页',
+            dynamic: true,
+            icon: "el-icon-location",
           },
           children: [
             {
@@ -29,6 +30,8 @@ export default () => {
               component: Home,
               meta: {
                 title: '首页',
+                dynamic: true,
+                icon: "el-icon-location",
               },
             }
           ]
@@ -41,6 +44,7 @@ export default () => {
             title: '路由',
             // 区分是否动态路由
             dynamic: true,
+            icon: "el-icon-location",
           },
           children: [
             {
@@ -50,6 +54,7 @@ export default () => {
               meta: {
                 title: '动态路由',
                 dynamic: true,
+                icon: "el-icon-location",
               },
             },
             {
@@ -59,6 +64,7 @@ export default () => {
               meta: {
                 title: '路由跳转',
                 dynamic: true,
+                icon: "el-icon-location",
               },
             },
           ]
