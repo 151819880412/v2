@@ -1,15 +1,24 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import { LoginRoute, PAGE_NOT_FOUND_ROUTE, HomeRoute } from './routes';
+import { LoginRoute, PAGE_NOT_FOUND_ROUTE } from './routes';
 import store from '@/store/index';
 import createRoutes from './createRoutes';
 
 import { PageEnum } from '@/enums/pageEnum';
 
+const aaa = {
+  path: '/aaa',
+  name: 'Aaa',
+  component: () => import('@/views/router/dynamicRouting/aaa.vue'),
+  meta: {
+    title: '测试动态路由',
+  },
+};
+
 const LOGIN_PATH = PageEnum.BASE_LOGIN;
 const whitePathList = [LOGIN_PATH];
 // VueRouter只会匹配符合规则的第一个路由,所以正则匹配的页面需要放在最后面
-const basicRoutes = [LoginRoute, HomeRoute, PAGE_NOT_FOUND_ROUTE];
+const basicRoutes = [LoginRoute, aaa, PAGE_NOT_FOUND_ROUTE,];
 
 Vue.use(VueRouter);
 
@@ -66,7 +75,6 @@ router.beforeEach(async (to, from, next) => {
 
   // 判断如果是动态路由就跳过，避免死循环
   if (store.getters.getIsDynamicAddedRoute) {
-    console.log(to.name, 'PageNotFound', to,);
     next();
     return;
   }
@@ -81,10 +89,9 @@ router.beforeEach(async (to, from, next) => {
   // });
   const originalRoutes = router.options.routes;
   const newRoutes = routes.concat(originalRoutes);
-  router.matcher = new VueRouter({ routes: newRoutes }).matcher;
+  router.matcher = new VueRouter({ routes: newRoutes, mode: 'history', }).matcher;
 
   store.dispatch('setDynamicAddedRoute', true);
-  console.log(to.name, 'PageNotFound', to, router.getRoutes());
   if (to.name === 'PageNotFound') {
     // 动态添加路由后，此处应当重定向到fullPath，否则会加载404页面内容
     next({ path: to.fullPath, replace: true, query: to.query });

@@ -19,6 +19,7 @@
 <script>
 import { login, queryUserPage } from '@/api/login';
 import { AxiosCanceler } from '@/utils/http/axiosCancel';
+import createRoutes from '@/router/createRoutes';
 
 export default {
   name: 'login',
@@ -54,8 +55,11 @@ export default {
             username: this.loginFormData.username,
             password: this.loginFormData.password
           });
+          // 假设这是后端返回的路由
+          const menu = await createRoutes()
+          data.menu = menu
           this.$store.dispatch('setUserInfo', data);
-          this.$router.push('/home')
+          this.$router.push('/home');
         }
       });
     },

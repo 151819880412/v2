@@ -5,6 +5,7 @@ let url = 'http://localhost:8087';  //  后端服务
 module.exports = {
   transpileDependencies: true,
   devServer: {
+    historyApiFallback: true,
     host: "localhost",
     // disableHostCheck: true,
     port: 8080,

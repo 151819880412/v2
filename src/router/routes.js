@@ -1,5 +1,6 @@
 const AppLayout = () => import('@/views/layout/AppLayout.vue');
 const Home = () => import('@/views/home/home.vue');
+const RouterTest = () => import('@/views/router/test/test.vue');
 const notFound = () => import('@/views/notFound/notFound.vue');
 
 export const LoginRoute = {
@@ -12,26 +13,26 @@ export const LoginRoute = {
   },
 };
 
-// 根路由
-export const HomeRoute = {
-  path: '/',
-  name: 'Home',
-  redirect: 'home',
-  component: AppLayout,
-  meta: {
-    title: '首页',
-  },
-  children: [
-    {
-      path: '/home',
-      name: 'Home',
-      component: Home,
-      meta: {
-        title: '首页',
-      },
-    }
-  ]
-};
+// // 根路由
+// export const HomeRoute = {
+//   path: '/',
+//   name: 'Home',
+//   redirect: 'home',
+//   component: AppLayout,
+//   meta: {
+//     title: '首页',
+//   },
+//   children: [
+//     {
+//       path: '/home',
+//       name: 'Home',
+//       component: Home,
+//       meta: {
+//         title: '首页',
+//       },
+//     }
+//   ]
+// };
 
 export const PAGE_NOT_FOUND_ROUTE = {
   path: '/:path(.*)*',

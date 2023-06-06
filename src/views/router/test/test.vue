@@ -1,9 +1,11 @@
 <template>
-  <div class='dynamicRouting'>dynamicRouting</div>
+  <div class='test'>
+    路由测试
+  </div>
 </template>
 <script>
 export default {
-  name: 'dynamicRouting',
+  name: 'test',
   props: {},
   data() {
     return {};
