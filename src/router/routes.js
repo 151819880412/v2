@@ -14,25 +14,25 @@ export const LoginRoute = {
 };
 
 // // 根路由
-// export const HomeRoute = {
-//   path: '/',
-//   name: 'Home',
-//   redirect: 'home',
-//   component: AppLayout,
-//   meta: {
-//     title: '首页',
-//   },
-//   children: [
-//     {
-//       path: '/home',
-//       name: 'Home',
-//       component: Home,
-//       meta: {
-//         title: '首页',
-//       },
-//     }
-//   ]
-// };
+export const HomeRoute = {
+  path: '/',
+  name: 'Home',
+  redirect: 'home',
+  component: AppLayout,
+  meta: {
+    title: '首页',
+  },
+  children: [
+    {
+      path: '/home',
+      name: 'Home',
+      component: Home,
+      meta: {
+        title: '首页',
+      },
+    }
+  ]
+};
 
 export const PAGE_NOT_FOUND_ROUTE = {
   path: '/:path(.*)*',

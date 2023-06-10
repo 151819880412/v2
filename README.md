@@ -23,7 +23,7 @@
 - README.md       // 项目说明文档
 
 ```
-## 依赖
+# 依赖
 ```shell
   npm i element-ui -S
   npm install axios
@@ -31,3 +31,30 @@
   npm i svg-sprite-loader -D
   npm install nprogress
 ```
+# 基础知识点
+## vue        template/script/style 三大标签
+## vue        生命周期
+## vue        data中的数据定义
+## vue        methdos/watch/computed
+## vue        全局组件/局部组件
+## vue-router 路由拦截器
+## vue-router 路由跳转/传参
+## vue-router 路由懒加载
+## vuex       全局状态共享/传参/取值
+## axios      请求/响应拦截器
+## axios      跨域处理
+## axios      调用/传参/返回值
+## 组件传参   props/$emit / EventBUS($emit/$on) / vuex / localStorage / $attrs/$listeners / provide/inject / $parent/$children/ref
+## svg的使用
+## 环境变量的使用
+## 三方库的注册/使用/按需加载
+# 高级知识点
+## vue        异步组件
+## vue        自定义指令/过滤器/混入
+## vue-router 动态路由
+## vue-router 单点登录
+## axios      重发/取消请求
+# 源码分析
+## 响应式原理/双向数据绑定
+## MVVM简述
+## 手写简易版vue

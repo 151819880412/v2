@@ -1,9 +1,9 @@
 <template>
-  <div class='aaa'>测试动态添加的路由</div>
+  <div class='dynamicRoutingTest'>测试动态添加的路由</div>
 </template>
 <script>
 export default {
-  name: 'aaa',
+  name: 'dynamicRoutingTest',
   props: {},
   data() {
     return {};

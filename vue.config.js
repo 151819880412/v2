@@ -1,7 +1,7 @@
 const { defineConfig } = require('@vue/cli-service');
 const  { resolve } = require('path')
 
-let url = 'http://localhost:8087';  //  后端服务
+let url = 'http://localhost:3000';  //  后端服务
 module.exports = {
   transpileDependencies: true,
   devServer: {

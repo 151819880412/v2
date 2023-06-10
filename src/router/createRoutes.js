@@ -13,29 +13,29 @@ export default () => {
   return new Promise(res => {
     setTimeout(() => {
       res([
-        {
-          path: '/',
-          name: 'Home',
-          redirect: 'home',
-          component: AppLayout,
-          meta: {
-            title: '首页',
-            dynamic: true,
-            icon: "el-icon-location",
-          },
-          children: [
-            {
-              path: '/home',
-              name: 'Home',
-              component: Home,
-              meta: {
-                title: '首页',
-                dynamic: true,
-                icon: "el-icon-location",
-              },
-            }
-          ]
-        },
+        // {
+        //   path: '/',
+        //   name: 'Home',
+        //   redirect: '/home',
+        //   component: AppLayout,
+        //   meta: {
+        //     title: '首页',
+        //     dynamic: true,
+        //     icon: "el-icon-location",
+        //   },
+        //   children: [
+        //     {
+        //       path: '/home',
+        //       name: 'Home',
+        //       component: Home,
+        //       meta: {
+        //         title: '首页',
+        //         dynamic: true,
+        //         icon: "el-icon-location",
+        //       },
+        //     }
+        //   ]
+        // },
         {
           path: '/router',
           name: 'Router',

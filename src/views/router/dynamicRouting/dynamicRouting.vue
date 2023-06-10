@@ -51,9 +51,9 @@ export default {
     addRouter() {
       let addList = _.cloneDeep(this.routerList);
       addList.push({
-        path: '/router/aaa',
+        path: '/router/dynamicRoutingTest',
         name: 'Aaa',
-        component: () => import('@/views/router/dynamicRouting/aaa.vue'),
+        component: () => import('@/views/router/dynamicRouting/dynamicRoutingTest.vue'),
         meta: {
           title: '测试动态路由',
           dynamic: true,
@@ -62,15 +62,15 @@ export default {
       const originalRoutes = this.$router.options.routes;
       const newRoutes = addList.concat(originalRoutes);
       this.$router.matcher = new VueRouter({ routes: newRoutes, mode: 'history', }).matcher;
-      this.$router.push('/aaa');
+      this.$router.push('/dynamicRoutingTest');
     },
     addChildRouter() {
       // 实际开发中应该不会有这种情况
       let addList = _.cloneDeep(this.routerList);
       addList[0].children.push({
-        path: '/router/aaa',
+        path: '/router/dynamicRoutingTest',
         name: 'Aaa',
-        component: () => import('@/views/router/dynamicRouting/aaa.vue'),
+        component: () => import('@/views/router/dynamicRouting/dynamicRoutingTest.vue'),
         meta: {
           title: '测试动态路由',
           dynamic: true,
@@ -79,8 +79,8 @@ export default {
       const originalRoutes = this.$router.options.routes;
       const newRoutes = addList.concat(originalRoutes);
       this.$router.matcher = new VueRouter({ routes: newRoutes, mode: 'history', }).matcher;
-      // this.$router.push('/router/aaa');
-      this.$router.push('./aaa');
+      // this.$router.push('/router/dynamicRoutingTest');
+      this.$router.push('./dynamicRoutingTest');
     },
     toRouter() {
       this.$router.push('/bbb');

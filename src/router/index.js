@@ -1,24 +1,16 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import { LoginRoute, PAGE_NOT_FOUND_ROUTE } from './routes';
+import { LoginRoute, PAGE_NOT_FOUND_ROUTE, HomeRoute } from './routes';
 import store from '@/store/index';
 import createRoutes from './createRoutes';
-
+import { login } from '@/api/login';
 import { PageEnum } from '@/enums/pageEnum';
-
-const aaa = {
-  path: '/aaa',
-  name: 'Aaa',
-  component: () => import('@/views/router/dynamicRouting/aaa.vue'),
-  meta: {
-    title: '测试动态路由',
-  },
-};
+import TestRouter from './testRouter';
 
 const LOGIN_PATH = PageEnum.BASE_LOGIN;
 const whitePathList = [LOGIN_PATH];
 // VueRouter只会匹配符合规则的第一个路由,所以正则匹配的页面需要放在最后面
-const basicRoutes = [LoginRoute, aaa, PAGE_NOT_FOUND_ROUTE,];
+const basicRoutes = TestRouter.concat([LoginRoute, HomeRoute, PAGE_NOT_FOUND_ROUTE]);
 
 Vue.use(VueRouter);
 
@@ -51,6 +43,21 @@ router.beforeEach(async (to, from, next) => {
   }
 
   const { accessToken } = store.getters.getToken;
+  // 简易版单点登录,路径上包含 role=admin 就能进入系统
+  // http://localhost:8080/home?role=admin
+  if (to.fullPath.indexOf('role=admin') > -1) {
+    let { data } = await login({
+      username: 'admin',
+      password: '123456'
+    });
+    // 假设这是后端返回的路由
+    const menu = await createRoutes();
+    // 默认显示主页
+    menu.unshift(HomeRoute);
+    data.menu = menu;
+    store.dispatch('setUserInfo', data);
+    next(to.path);
+  }
   if (!accessToken) {
     // 可以在未经许可的情况下访问。需要设置路由元。ignoreAuth为true
     if (to.meta.ignoreAuth) {

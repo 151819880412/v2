@@ -20,6 +20,7 @@
 import { login, queryUserPage } from '@/api/login';
 import { AxiosCanceler } from '@/utils/http/axiosCancel';
 import createRoutes from '@/router/createRoutes';
+import { HomeRoute } from '@/router/routes';
 
 export default {
   name: 'login',
@@ -27,17 +28,17 @@ export default {
   data() {
     return {
       loginFormData: {
-        username:"1",
-        password:"qwe123"
+        username:"admin",
+        password:"123456"
       },
       loginRules: {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
-          // { min: 3, max: 9, message: '长度在 3 到 9 个字符', trigger: 'blur' }
+          { min: 3, max: 9, message: '长度在 3 到 9 个字符', trigger: 'blur' }
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
-          // { min: 3, max: 9, message: '长度在 3 到 9 个字符', trigger: 'blur' }
+          { min: 3, max: 9, message: '长度在 3 到 9 个字符', trigger: 'blur' }
         ],
       }
     };
@@ -60,6 +61,8 @@ export default {
           });
           // 假设这是后端返回的路由
           const menu = await createRoutes()
+          // 默认显示主页
+          menu.unshift(HomeRoute)
           data.menu = menu
           this.$store.dispatch('setUserInfo', data);
           this.$router.push('/home');
