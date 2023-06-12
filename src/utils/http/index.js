@@ -39,7 +39,6 @@ const transform = {
 
 
     // 成功的消息提示
-    console.log(successMessageMode,111)
     if (code === 20000 && successMessageMode) {
       Message.success(message);
     }

@@ -1,6 +1,9 @@
+const initialState = {
+  userInfo: JSON.parse(localStorage.getItem('userInfo')) || {}
+};
 const user = {
   state: {
-    userInfo: JSON.parse(localStorage.getItem('userInfo')) || {}
+    ...initialState
   },
   getters: {
     getUserInfo(state) {
@@ -24,12 +27,19 @@ const user = {
     setUserInfo({ commit, state }, data) {
       commit('setUserInfo', data);
     },
+    resetState({ commit, state },) {
+      commit('resetState',);
+    },
   },
   // 不支持异步函数
   mutations: {
     setUserInfo(state, data) {
       state.userInfo = data;
       localStorage.setItem('userInfo', JSON.stringify(data));
+    },
+    resetState(state) {
+      // 重置状态为初始值
+      Object.assign(state, initialState);
     },
   },
 

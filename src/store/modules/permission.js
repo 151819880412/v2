@@ -1,13 +1,15 @@
 // import store from '../index';
-
+const initialState = {
+  // 路由是否动态添加
+  isDynamicAddedRoute: false,
+  // 触发菜单更新
+  lastBuildMenuTime: 0,
+  // 菜单列表
+  MenuList: [],
+};
 const permission = {
   state: {
-    // 路由是否动态添加
-    isDynamicAddedRoute: false,
-    // 触发菜单更新
-    lastBuildMenuTime: 0,
-    // 菜单列表
-    MenuList: [],
+    ...initialState
   },
   getters: {
     getMenuList(state) {
@@ -51,9 +53,11 @@ const permission = {
       state.isDynamicAddedRoute = added;
     },
     resetState(state) {
-      state.isDynamicAddedRoute = false;
-      state.MenuList = [];
-      state.lastBuildMenuTime = 0;
+      // state.isDynamicAddedRoute = false;
+      // state.MenuList = [];
+      // state.lastBuildMenuTime = 0;
+      Object.assign(state, initialState);
+
     },
     // 构建路由
     async buildRoutesAction(state) {

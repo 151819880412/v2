@@ -1,12 +1,3 @@
-export const DynamicRoutingTest = {
-  path: '/dynamicRoutingTest',
-  name: 'DynamicRoutingTest',
-  component: () => import('@/views/router/dynamicRouting/dynamicRoutingTest.vue'),
-  meta: {
-    title: '测试动态路由',
-  },
-};
-
 export const RoutingJumpTest = {
   path: '/router/routingJumpTest/:id?',
   name: 'RoutingJumpTest',
@@ -16,4 +7,4 @@ export const RoutingJumpTest = {
   },
 };
 
-export default [DynamicRoutingTest, RoutingJumpTest];
+export default [ RoutingJumpTest];

@@ -11,13 +11,12 @@
         <el-button type="primary" @click="toLogin">登录</el-button>
       </el-form-item>
     </el-form>
-    <el-button @click="queryUser">查询用户</el-button>
-    <el-button @click="cancel">取消请求</el-button>
+    <!-- <el-button @click="cancel">取消请求</el-button> -->
 
   </div>
 </template>
 <script>
-import { login, queryUserPage } from '@/api/login';
+import { login } from '@/api/login';
 import { AxiosCanceler } from '@/utils/http/axiosCancel';
 import createRoutes from '@/router/createRoutes';
 import { HomeRoute } from '@/router/routes';
@@ -28,8 +27,8 @@ export default {
   data() {
     return {
       loginFormData: {
-        username:"admin",
-        password:"123456"
+        username: "admin",
+        password: "123456"
       },
       loginRules: {
         username: [
@@ -44,7 +43,10 @@ export default {
     };
   },
   created() { },
-  mounted() { },
+  mounted() {
+    localStorage.clear();
+    this.$store.commit('resetAllStates');
+  },
   computed: {},
   methods: {
     cancel() {
@@ -60,18 +62,15 @@ export default {
             password: this.loginFormData.password
           });
           // 假设这是后端返回的路由
-          const menu = await createRoutes()
+          const menu = await createRoutes();
           // 默认显示主页
-          menu.unshift(HomeRoute)
-          data.menu = menu
+          menu.unshift(HomeRoute);
+          data.menu = menu;
           this.$store.dispatch('setUserInfo', data);
           this.$router.push('/home');
         }
       });
     },
-    async queryUser() {
-      let data = await queryUserPage(1, 10, {});
-    }
   },
   watch: {},
   components: {},

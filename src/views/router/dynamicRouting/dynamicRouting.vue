@@ -49,10 +49,11 @@ export default {
   computed: {},
   methods: {
     addRouter() {
+      // 实际开发中应该不会有这种情况(刷新后404)
       let addList = _.cloneDeep(this.routerList);
       addList.push({
-        path: '/router/dynamicRoutingTest',
-        name: 'Aaa',
+        path: '/dynamicRoutingTest',
+        name: 'DynamicRoutingTest',
         component: () => import('@/views/router/dynamicRouting/dynamicRoutingTest.vue'),
         meta: {
           title: '测试动态路由',
@@ -65,11 +66,11 @@ export default {
       this.$router.push('/dynamicRoutingTest');
     },
     addChildRouter() {
-      // 实际开发中应该不会有这种情况
+      // 实际开发中应该不会有这种情况(刷新后404)
       let addList = _.cloneDeep(this.routerList);
       addList[0].children.push({
         path: '/router/dynamicRoutingTest',
-        name: 'Aaa',
+        name: 'DynamicRoutingTest',
         component: () => import('@/views/router/dynamicRouting/dynamicRoutingTest.vue'),
         meta: {
           title: '测试动态路由',
@@ -79,7 +80,7 @@ export default {
       const originalRoutes = this.$router.options.routes;
       const newRoutes = addList.concat(originalRoutes);
       this.$router.matcher = new VueRouter({ routes: newRoutes, mode: 'history', }).matcher;
-      // this.$router.push('/router/dynamicRoutingTest');
+      // this.$router.push('/router/dynamicRoutingTest'); // 两种方式都行
       this.$router.push('./dynamicRoutingTest');
     },
     toRouter() {
