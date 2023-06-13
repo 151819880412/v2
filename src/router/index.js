@@ -20,7 +20,7 @@ const router = new VueRouter({
   strict: true,
   mode: 'history',
   routes: basicRoutes,
-  // 滚动条行为
+  // 滚动条行为 html的高度不能设置写死,否则会产生组件内部的滚动条,不受window.scrollTo影响
   scrollBehavior: () => ({ x: 0, y: 0 }),
 });
 

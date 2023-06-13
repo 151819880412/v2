@@ -28,9 +28,9 @@
       rotate:旋转
       custom:自定义过渡
      -->
-    <!-- <transition name="slide"> -->
+    <transition name="slide">
       <router-view></router-view>
-    <!-- </transition> -->
+    </transition>
   </div>
 </template>
 <script>
@@ -50,10 +50,6 @@ export default {
 };
 </script>
 <style lang='stylus' scoped>
-
-.PageLayout{
-  height: 800px
-}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
