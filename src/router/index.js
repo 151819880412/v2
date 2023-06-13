@@ -20,7 +20,7 @@ const router = new VueRouter({
   strict: true,
   mode: 'history',
   routes: basicRoutes,
-  // 滚动条行为 html的高度不能设置,否则不会生效  https://juejin.cn/post/7085637321407594533
+  // 滚动条行为
   scrollBehavior: () => ({ x: 0, y: 0 }),
 });
 

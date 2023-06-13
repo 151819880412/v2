@@ -50,6 +50,10 @@ export default {
 };
 </script>
 <style lang='stylus' scoped>
+
+.PageLayout{
+  height: 800px
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
