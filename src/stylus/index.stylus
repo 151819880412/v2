@@ -6,13 +6,15 @@ $editorTabsborderColor: #121315
 body,
 html {
   margin: 0;
-  height: 100%;
   padding: 0;
   background: #fff;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+}
+body{
+  height: 100%;
 }
 
 input,

@@ -1,3 +1,5 @@
+// vue-router的配置  https://v3.router.vuejs.org/zh/guide/advanced/transitions.html
+
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import { LoginRoute, PAGE_NOT_FOUND_ROUTE, HomeRoute } from './routes';
@@ -17,7 +19,9 @@ Vue.use(VueRouter);
 const router = new VueRouter({
   strict: true,
   mode: 'history',
-  routes: basicRoutes
+  routes: basicRoutes,
+  // 滚动条行为 html的高度不能设置,否则不会生效  https://juejin.cn/post/7085637321407594533
+  scrollBehavior: () => ({ x: 0, y: 0 }),
 });
 
 // 重写路由跳转的方法,避免重复进入同一个路由报错
@@ -31,6 +35,21 @@ VueRouter.prototype.push = function push(location, onResolve, onReject) {
   return originalPush.call(this, location).catch(err => err);
 };
 
+/**
+ * 导航守卫
+ * 全局前置守卫  beforeEach
+ * 下面的没用过
+ * 全局解析守卫  beforeResolve 
+ * 全局后置守卫  afterEach
+ * 路由独享的守卫 beforeEnter 
+ * 组件内的守卫   beforeRouteEnter  beforeRouteUpdate  beforeRouteLeave
+ * @author  
+ * @date 2023-06-12
+ * @param {any} to
+ * @param {any} from
+ * @param {any} next
+ * @returns {any}
+ */
 router.beforeEach(async (to, from, next) => {
   if (to.path === from.path) {
     return; // 取消导航
@@ -110,4 +129,5 @@ router.beforeEach(async (to, from, next) => {
   }
 
 });
+
 export default router;

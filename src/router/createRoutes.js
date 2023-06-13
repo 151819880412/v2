@@ -7,7 +7,6 @@
 const AppLayout = () => import('@/views/layout/AppLayout.vue');
 const DynamicRouting = () => import('@/views/router/dynamicRouting/dynamicRouting.vue');
 const RoutingJump = () => import('@/views/router/routingJump/routingJump.vue');
-const Home = () => import('@/views/home/home.vue');
 
 export default () => {
   return new Promise(res => {

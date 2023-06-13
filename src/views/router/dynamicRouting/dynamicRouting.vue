@@ -1,5 +1,5 @@
 <template>
-  <div class='dynamicRouting'>
+  <div class='dynamicRouting' style="width:5000px;height:5000px">
     <el-button @click="addRouter">动态添加子集路由</el-button>
     <el-divider></el-divider>
     <el-button @click="addChildRouter">动态添加子集路由</el-button>

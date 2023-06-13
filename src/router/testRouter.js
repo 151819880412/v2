@@ -5,6 +5,8 @@ export const RoutingJumpTest = {
   meta: {
     title: '路由跳转/传参测试',
   },
+  // 将路由上的参数传到组件props上  https://router.vuejs.org/zh/guide/essentials/passing-props.html
+  props: true
 };
 
-export default [ RoutingJumpTest];
+export default [RoutingJumpTest];
