@@ -28,7 +28,7 @@
       rotate:旋转
       custom:自定义过渡
      -->
-    <transition name="slide">
+    <transition name="fade">
       <router-view></router-view>
     </transition>
   </div>

@@ -8,9 +8,11 @@
         <el-header>
           <Header />
         </el-header>
-        <el-main>
-          <PageLayout />
-        </el-main>
+        <el-scrollbar ref="scrollbar">
+          <el-main>
+            <PageLayout />
+          </el-main>
+        </el-scrollbar>
       </el-container>
     </el-container>
   </div>
@@ -28,16 +30,28 @@ export default {
     return {};
   },
   created() { },
-  mounted() { },
+  mounted() {
+  },
   computed: {},
-  methods: {},
+  methods: {
+    // 组件内部的滚动条回到原点
+    scrollToTop() {
+      this.$nextTick(() => {
+        this.$refs.scrollbar.wrap.scrollTop = 0;
+      });
+    }
+  },
   watch: {},
   components: {
     PageLayout,
     SidebarNav,
     Header,
   },
-  beforeDestroy() { }
+  beforeDestroy() { },
+  beforeRouteUpdate(to, from, next) {
+    next();
+    this.scrollToTop();
+  }
 };
 </script>
 <style lang='stylus' scoped>
