@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import permission from './modules/permission'
 import user from './modules/user'
+import com from './modules/com'
 
 Vue.use(Vuex)
 
@@ -20,7 +21,8 @@ function resetAllModuleStates(store) {
 export default new Vuex.Store({
   modules: {
     permission,
-    user
+    user,
+    com,
     // 其他模块...
   },
   mutations: {
