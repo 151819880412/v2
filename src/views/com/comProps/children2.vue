@@ -4,6 +4,8 @@
     <h3>msgObject的值：{{ msgObject.msg }}</h3>
     <h3>msgObject新增属性的值：{{ msgObject.addMsg }}</h3>
     <h3>msgObjectCopy的值{{ msgObjectCopy }}</h3>
+    <slot name="header" v-bind="headerProps"></slot>
+    <slot name="content" v-bind="contentProps"></slot>
     <!-- 只能用于父子组件传参 -->
     <h3>v-model:{{ value }}</h3><!-- 一般在封装表单组件的时候使用 -->
     <el-button @click="changeMsgByEmit">子向父emit传参</el-button>
@@ -43,16 +45,22 @@ export default {
   },
   data() {
     return {
+      headerProps: {
+        title: 'slot+name传参headerProps'
+      },
+      contentProps: {
+        message: 'slot+name传参contentProps'
+      },
       eventBusNum: 0,
       // 页面初始化的时候执行一次,引用了第一次传入的参数
       msgObjectCopy: this.msgObject,
-      testNum:0,
+      testNum: 0,
     };
   },
   created() {
     console.log('执行顺序children2--created');
   },
-  mounted() { 
+  mounted() {
     console.log('执行顺序children2--mounted');
   },
   computed: {},
@@ -108,12 +116,12 @@ export default {
       this.eventBusNum += 1;
       EventBus.$emit('eventBus', `eventBus参数${this.eventBusNum}`);
     },
-    toVuex(){
+    toVuex() {
       this.$store.dispatch('setComProps', 1);
     },
-    toLocalStorage(){
-      this.testNum+=1
-      localStorage.setItem('testNum',this.testNum)
+    toLocalStorage() {
+      this.testNum += 1;
+      localStorage.setItem('testNum', this.testNum);
     },
   },
   watch: {},

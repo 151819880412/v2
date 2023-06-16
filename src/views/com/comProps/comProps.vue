@@ -1,3 +1,20 @@
+<!-- 
+  组件传参总结:
+    1.父子:props/$emit
+    2.父子:子直接修改props的属性
+    3.父子:子copy一份props的参数
+    4.父子:子this.$emit('update:xxx',xxx) 父组件需要加sync修饰符才会生效 
+    5.父子:子this.$emit('input',xxx)   父v-model="xxx"
+    6.父子:$parent / $children与 ref
+    7.父子:slot插槽
+    8.父子/祖孙:$attrs/$listeners
+    9.父子/祖孙:provide/inject
+    10.跨组件:EventBus
+    11.跨组件:Vuex
+    12.跨组件:localStorage
+    13.跨组件:路由传参
+-->
+
 <template>
   <div class='comProps'>
     <h1 class="title">
@@ -10,8 +27,14 @@
     <el-button @click="changeMsgCopy2">父通过ref直接修改组件间的msgCopy</el-button>
     <div class="box">
       <Children :msg.sync="msg" @changeMsg="parentChangeMsg" ref="childrenRef" v-model="value1" />
-      <Children2 :msgObject.sync="msgObject" @changeMsgObject="parentChangeMsgObject" ref="childrenRef"
-        v-model="value2" />
+      <Children2 :msgObject.sync="msgObject" @changeMsgObject="parentChangeMsgObject" ref="childrenRef" v-model="value2">
+        <template v-slot:header="slotProps">
+          <h3>{{ slotProps.title }}</h3>
+        </template>
+        <template v-slot:content="slotProps">
+          <h3>{{ slotProps.message  }}</h3>
+        </template>
+      </Children2>
       <!-- 
         $attrs/$listeners
         $attrs包含父组件传给子组件中没有被子组件props声明的属性
@@ -46,6 +69,7 @@ export default {
       msg: "父向子传基本数据类型的参数",
       value1: "父组件v-model传值1111111",
       value2: "父组件v-model传值2222222",
+      slotProps: "父组件slot的参数",
       EventBusValue: "",
       // 子组件2
       msgObject: {
