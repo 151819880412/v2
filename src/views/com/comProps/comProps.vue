@@ -13,6 +13,7 @@
     11.跨组件:Vuex
     12.跨组件:localStorage
     13.跨组件:路由传参
+    14.跨组件:存在Window对象上(极其不推荐)
 -->
 
 <template>
