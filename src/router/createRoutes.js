@@ -9,6 +9,7 @@ const AppLayout = () => import('@/views/layout/AppLayout.vue');
 const DynamicRouting = () => import('@/views/router/dynamicRouting/dynamicRouting.vue');
 const RoutingJump = () => import('@/views/router/routingJump/routingJump.vue');
 const ComProps = () => import('@/views/com/comProps/comProps.vue');
+const ComSlot = () => import('@/views/com/comSlot/comSlot.vue');
 const WatchComputed = () => import('@/views/base/WatchComputed.vue');
 
 export default () => {
@@ -82,6 +83,16 @@ export default () => {
             icon: "el-icon-location",
           },
           children: [
+            {
+              path: '/com/comSlot',
+              name: 'ComSlot',
+              component: ComSlot,
+              meta: {
+                title: '插槽',
+                dynamic: true,
+                icon: "el-icon-location",
+              },
+            },
             {
               path: '/com/comProps',
               name: 'ComProps',
