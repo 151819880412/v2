@@ -10,6 +10,7 @@ const DynamicRouting = () => import('@/views/router/dynamicRouting/dynamicRoutin
 const RoutingJump = () => import('@/views/router/routingJump/routingJump.vue');
 const ComProps = () => import('@/views/com/comProps/comProps.vue');
 const ComSlot = () => import('@/views/com/comSlot/comSlot.vue');
+const ComMixin = () => import('@/views/com/comMixin/comMixin.vue');
 const WatchComputed = () => import('@/views/base/WatchComputed.vue');
 
 export default () => {
@@ -89,6 +90,16 @@ export default () => {
               component: ComSlot,
               meta: {
                 title: '插槽',
+                dynamic: true,
+                icon: "el-icon-location",
+              },
+            },
+            {
+              path: '/com/comMixin',
+              name: 'ComMixin',
+              component: ComMixin,
+              meta: {
+                title: '混入',
                 dynamic: true,
                 icon: "el-icon-location",
               },
