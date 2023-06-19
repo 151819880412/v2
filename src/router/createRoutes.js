@@ -11,6 +11,7 @@ const RoutingJump = () => import('@/views/router/routingJump/routingJump.vue');
 const ComProps = () => import('@/views/com/comProps/comProps.vue');
 const ComSlot = () => import('@/views/com/comSlot/comSlot.vue');
 const ComMixin = () => import('@/views/com/comMixin/comMixin.vue');
+const Directives = () => import('@/views/com/directives/directives.vue');
 const WatchComputed = () => import('@/views/base/WatchComputed.vue');
 
 export default () => {
@@ -100,6 +101,16 @@ export default () => {
               component: ComMixin,
               meta: {
                 title: '混入',
+                dynamic: true,
+                icon: "el-icon-location",
+              },
+            },
+            {
+              path: '/com/directives',
+              name: 'Directives',
+              component: Directives,
+              meta: {
+                title: '指令',
                 dynamic: true,
                 icon: "el-icon-location",
               },

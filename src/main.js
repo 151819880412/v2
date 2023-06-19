@@ -8,8 +8,14 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
 import '@/stylus/index.stylus';
+import dialogDrag from './views/com/directives/dialogDrag';
+
 
 Vue.config.productionTip = false;
+
+// 全局指令
+Vue.use(dialogDrag);
+
 
 new Vue({
   router,
