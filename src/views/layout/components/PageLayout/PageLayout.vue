@@ -52,13 +52,21 @@ export default {
 <style lang='stylus' scoped>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity 2s ;
 }
 
 // 淡入淡出
-.fade-enter,
-.fade-leave-to {
+.fade-enter{
+  visibility: hidden;
   opacity: 0;
+}
+.fade-leave-to{
+  display: none;
+}
+.fade-enter-to,
+.fade-leave{
+  visibility: visible;
+  opacity: 1;
 }
 
 // 滑动
