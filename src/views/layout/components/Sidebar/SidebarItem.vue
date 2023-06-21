@@ -5,7 +5,8 @@
 <template>
   <div class="menu-container">
     <template v-for="item in menuList">
-      <el-submenu :index="item.path" v-if="item.children && item.children.length > 0" :key="item.path">
+      <el-submenu :index="item.path"
+        v-if="item.children && item.children.length > 0 && item.meta && !item.meta.hideChildrenInMenu" :key="item.path">
         <template slot="title">
           <i style="font-size: 20px; padding: 0 8px" class="iconfont" :class="item.meta.icon"></i>
           <span>{{ item.meta.title }}</span>

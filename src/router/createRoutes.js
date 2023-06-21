@@ -12,6 +12,7 @@ const ComProps = () => import('@/views/com/comProps/comProps.vue');
 const ComSlot = () => import('@/views/com/comSlot/comSlot.vue');
 const ComMixin = () => import('@/views/com/comMixin/comMixin.vue');
 const Directives = () => import('@/views/com/directives/directives.vue');
+const DefineProperty = () => import('@/views/defineProperty/defineProperty.vue');
 const WatchComputed = () => import('@/views/base/WatchComputed.vue');
 
 export default () => {
@@ -121,6 +122,29 @@ export default () => {
               component: ComProps,
               meta: {
                 title: '组件传参',
+                dynamic: true,
+                icon: "el-icon-location",
+              },
+            },
+          ]
+        },
+        {
+          path: '/defineProperty',
+          name: 'DefineProperty',
+          component: AppLayout,
+          meta: {
+            title: '响应式原理',
+            dynamic: true,
+            icon: "el-icon-location",
+            hideChildrenInMenu: true,
+          },
+          children: [
+            {
+              path: '/defineProperty',
+              name: 'DefineProperty',
+              component: DefineProperty,
+              meta: {
+                title: '响应式原理',
                 dynamic: true,
                 icon: "el-icon-location",
               },

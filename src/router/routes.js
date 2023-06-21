@@ -21,6 +21,8 @@ export const HomeRoute = {
   component: AppLayout,
   meta: {
     title: '首页',
+    icon: "el-icon-location",
+    hideChildrenInMenu: true,
   },
   children: [
     {
