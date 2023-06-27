@@ -60,18 +60,4 @@
 ## 手写简易版vue
 
 # 开发问题
-## 部署缓存
-```
-  index.html
-  <meta http-equiv="pragram" content="no-cache">
-  <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="expires" content="0">
-  nginx
-  server {
-    location = / {
-      try_files $uri /index.html;
-      add_header Cache-Control 'no-cache, no-store';
-    }
-  }
-  但是如果这样设置后，其实可以理解为每次都需要去咨询服务器是否更新，这样每次刷新页面的时候，会导致加载时间太长。各位酌情加
-```
+## 部署缓存 autoUpdate.js
