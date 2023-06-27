@@ -11,7 +11,6 @@ async function getScripts() {
   while ((match = scriptReg.exec(html))) {
     result.push(match[1]);
   }
-  console.log(result);
   return result;
 }
 async function needUpdate() {
