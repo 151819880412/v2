@@ -16,16 +16,17 @@
       </span>
     </el-dialog>
     <el-divider></el-divider>
+    <!-- 显示 -->
+    <el-button v-permission="'1'">权限按钮1</el-button>
+    <!-- 不显示 -->
+    <el-button v-permission="'10'">权限按钮2</el-button>
+    <el-divider></el-divider>
     <div style="height:300px;border:1px solid black;position:relative">
       <div v-draggable style="height:100px;width:100px;border:1px solid black;position:absolute">
         <div class="resizeTag" v-resize />
       </div>
     </div>
-    <el-divider></el-divider>
-    <!-- 显示 -->
-    <el-button v-permission="'1'">权限按钮1</el-button>
-    <!-- 不显示 -->
-    <el-button v-permission="'10'">权限按钮2</el-button>
+
   </div>
 </template>
 <script>
