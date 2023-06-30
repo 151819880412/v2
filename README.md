@@ -59,5 +59,8 @@
 ## MVVM简述
 ## 手写简易版vue
 
+## 在线代码编辑器
+  monaco-editor体积太大   https://testerhome.com/topics/36351
+
 # 开发问题
 ## 部署缓存 autoUpdate.js

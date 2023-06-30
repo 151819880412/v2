@@ -1,5 +1,6 @@
 const { defineConfig } = require('@vue/cli-service');
-const  { resolve } = require('path')
+const { resolve } = require('path');
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 let url = 'http://localhost:3000';  //  后端服务
 module.exports = {
@@ -25,6 +26,13 @@ module.exports = {
   productionSourceMap: false,
   lintOnSave: false,
   chainWebpack: config => {
+    // monaco-editor 编辑器
+    config.plugin('monaco-editor').use(MonacoWebpackPlugin, [
+      {
+        // Languages are loaded on demand at runtime
+        languages: ['json', 'javascript', 'html', 'xml', 'go', 'typescript']
+      }
+    ]);
     // set svg-sprite-loader
     config.module
       .rule('svg')
