@@ -1,20 +1,16 @@
-const { defineConfig } = require('@vue/cli-service');
-const { resolve } = require('path');
+const path = require('path');
+
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
-let url = 'http://localhost:3000';  //  后端服务
 module.exports = {
-  transpileDependencies: true,
   devServer: {
     historyApiFallback: true,
     host: "localhost",
-    // disableHostCheck: true,
     port: 8080,
     open: true,
-    // 跨域代理
     proxy: {
       '/api': {
-        target: url,
+        target: 'http://localhost:3000',
         ws: true,
         changeOrigin: true,
         pathRewrite: {
@@ -25,23 +21,28 @@ module.exports = {
   },
   productionSourceMap: false,
   lintOnSave: false,
-  chainWebpack: config => {
-    // monaco-editor 编辑器
-    config.plugin('monaco-editor').use(MonacoWebpackPlugin, [
-      {
-        // Languages are loaded on demand at runtime
-        languages: ['json', 'javascript', 'html', 'xml', 'go', 'typescript']
+  configureWebpack: {
+    resolve: {
+      alias: {
+        'vue$': 'vue/dist/vue.esm.js' // 确保使用包含编译器的构建
       }
-    ]);
-    // set svg-sprite-loader
+    },
+    plugins: [
+      new MonacoWebpackPlugin({
+        languages: ['json', 'javascript', 'html', 'xml', 'go', 'typescript']
+      })
+    ]
+  },
+  chainWebpack: config => {
     config.module
       .rule('svg')
-      .exclude.add(resolve('src/assets/icons'))
+      .exclude.add(path.resolve('src/assets/icons'))
       .end();
+
     config.module
       .rule('icons')
       .test(/\.svg$/)
-      .include.add(resolve('src/assets/icons'))
+      .include.add(path.resolve('src/assets/icons'))
       .end()
       .use('svg-sprite-loader')
       .loader('svg-sprite-loader')

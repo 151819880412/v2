@@ -14,6 +14,9 @@ const ComMixin = () => import('@/views/com/comMixin/comMixin.vue');
 const Directives = () => import('@/views/com/directives/directives.vue');
 const DefineProperty = () => import('@/views/defineProperty/defineProperty.vue');
 const WatchComputed = () => import('@/views/base/WatchComputed.vue');
+const MonacoEditor = () => import('@/views/monacoEditor/monacoEditor.vue');
+
+import createApp from '@/utils/createApp';
 
 export default () => {
   return new Promise(res => {
@@ -122,6 +125,26 @@ export default () => {
               component: ComProps,
               meta: {
                 title: '组件传参',
+                dynamic: true,
+                icon: "el-icon-location",
+              },
+            },
+            {
+              path: '/com/monacoEditor',
+              name: 'MonacoEditor',
+              component: MonacoEditor,
+              meta: {
+                title: '代码编辑',
+                dynamic: true,
+                icon: "el-icon-location",
+              },
+            },
+            {
+              path: '/com/comTest',
+              name: 'comTest',
+              component: createApp(),
+              meta: {
+                title: '动态组件测试',
                 dynamic: true,
                 icon: "el-icon-location",
               },

@@ -62,5 +62,9 @@
 ## 在线代码编辑器
   monaco-editor体积太大   https://testerhome.com/topics/36351
 
+## vue服务端渲染 https://v2.ssr.vuejs.org/zh/
+  1. 生命周期只有 beforeCreate created 
+  2. 为每个请求创建一个新的根 Vue 实例
+
 # 开发问题
 ## 部署缓存 autoUpdate.js

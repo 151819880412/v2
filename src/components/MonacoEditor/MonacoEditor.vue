@@ -5,8 +5,30 @@
 </template>
 
 <script>
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.main';
-import 'monaco-editor/esm/vs/basic-languages/javascript/javascript.contribution' // 代码高亮
+import * as monaco from 'monaco-editor';
+// import * as monaco from 'monaco-editor/esm/vs/editor/editor.main';
+// import 'monaco-editor/esm/vs/editor/browser/controller/coreCommands.js';
+// // 核心命令，处理编辑器的基本操作，如剪切、复制、粘贴等
+// import 'monaco-editor/esm/vs/editor/contrib/find/findController.js';
+// // 查找和替换功能，包括查找、替换、查找下一个、查找上一个等操作
+// import 'monaco-editor/esm/vs/editor/contrib/hover/hover.js';
+// // 鼠标悬停提示的功能，当鼠标悬停在代码上时，会显示相关的信息或注释
+// import 'monaco-editor/esm/vs/editor/contrib/suggest/suggestController.js';
+// // 代码建议的功能，当你输入代码时，会显示相关的建议和补全选项
+// import 'monaco-editor/esm/vs/editor/contrib/wordHighlighter/wordHighlighter.js';
+// // 单词高亮的功能，当你选中一个单词时，会自动高亮显示其他相同单词的位置
+// import 'monaco-editor/esm/vs/basic-languages/javascript/javascript.contribution.js';
+// // JavaScript语言的支持，包括语法解析、关键字高亮等
+// import 'monaco-editor/esm/vs/editor/editor.all.js';
+// // Monaco Editor的主要代码文件，包含了编辑器的核心功能和模块
+// import 'monaco-editor/esm/vs/editor/contrib/find/findWidget.css';
+// // 样式化查找和替换功能的部件
+// import 'monaco-editor/esm/vs/base/browser/ui/hover/hover.css';
+// // 样式化悬停提示的部件
+// import 'monaco-editor/esm/vs/editor/contrib/suggest/media/suggest.css';
+// // 样式化代码建议的部件
+
+
 
 export default {
   name: 'MonacoEditor',
@@ -61,7 +83,7 @@ export default {
           automaticLayout: true, // 自动布局
           glyphMargin: true, // 字形边缘
           useTabStops: false,
-          fontSize: 32, // 字体大小
+          fontSize: 16, // 字体大小
           autoIndent: true // 自动布局
           // quickSuggestionsDelay: 500,   //代码提示延时
         };
@@ -101,9 +123,10 @@ export default {
       const self = this;
       // 初始化编辑器，确保dom已经渲染
       this.editor = monaco.editor.create(self.$refs.monacoEditor, {
+        ...this.editorOptions,
         theme: "vs-dark", // 主题
         value: "", // 默认显示的值
-        language: "vue",
+        language: "html",
         folding: true, // 是否折叠
         foldingHighlight: true, // 折叠等高线
         foldingStrategy: "indentation", // 折叠方式  auto | indentation
@@ -130,113 +153,13 @@ export default {
         self.$emit('onCodeChange', self.editor.getValue(), event);
       });
 
-      // 定义 Vue 语言的词法分析器
-      const languageDefinition = {
-        tokenizer: {
-          root: [
-            // 定义词法规则
-            [/\<\!\-\-/, 'comment', '@comment'], // HTML 注释
-            [/\{\{/, 'delimiter', '@interpolation'], // Vue 插值表达式的开始
-            [/[\{\}]/, 'delimiter'], // Vue 插值表达式的结束
-            [/\<\/?template/, 'tag'], // Vue 模板标签
-            [/\<\/?script/, { token: 'tag', next: '@script' }], // Vue <script> 标签
-            [/\<\/?style/, { token: 'tag', next: '@style' }], // Vue <style> 标签
-            [/[a-zA-Z_][\w\-\:\.]*/, {
-              cases: {
-                // '@keywords': 'keyword', // Vue 关键字
-                '@default': 'identifier' // Vue 标识符
-              }
-            }],
-          ],
-          comment: [
-            [/[^<\-]+/, 'comment.content'],
-            [/-->/, 'comment', '@pop'],
-            [/<!--/, 'comment.content.invalid'],
-            [/[<\-]/, 'comment.content'],
-          ],
-          interpolation: [
-            [/\}\}/, 'delimiter', '@pop'],
-            [/./, 'variable'],
-          ],
-          script: [
-            [/\<\/script/, { token: '@rematch', next: '@pop' }],
-            [/\<\/?template/, { token: '@rematch', next: '@pop' }],
-            [/\{\{/, { token: '@rematch', next: '@pop' }],
-            { include: 'javascript' }
-          ],
-          style: [
-            [/\<\/style/, { token: '@rematch', next: '@pop' }],
-            [/\<\/?template/, { token: '@rematch', next: '@pop' }],
-            [/\{\{/, { token: '@rematch', next: '@pop' }],
-            { include: 'css' }
-          ],
-          css: [
-            [/[^{]+/, 'attribute.value'],
-            [/\}/, 'delimiter', '@pop'],
-            [/./, 'attribute.value'],
-          ],
-          javascript: [
-            [/\<\/script/, { token: '@rematch', next: '@pop' }],
-            [/\<\/?template/, { token: '@rematch', next: '@pop' }],
-            [/\{\{/, { token: '@rematch', next: '@pop' }],
-            // 其他 JavaScript 词法规则
-            // ...
-            // 常用的 JavaScript 关键字
-            ['function', 'keyword'],
-            ['if', 'keyword'],
-            ['else', 'keyword'],
-            ['for', 'keyword'],
-            ['while', 'keyword'],
-            ['var', 'keyword'],
-            ['const', 'keyword'],
-            ['let', 'keyword'],
-            ['return', 'keyword'],
-            // 常用的 JavaScript 内置对象和方法
-            ['Math', 'identifier'],
-            ['Array', 'identifier'],
-            ['Object', 'identifier'],
-            ['String', 'identifier'],
-            ['parseInt', 'identifier'],
-            ['setTimeout', 'identifier'],
-            ['console', 'identifier'],
-            // 其他自定义的标识符规则
-            [/[_$a-zA-Z\xA0-\uFFFF][$\w\xA0-\uFFFF]*/, 'identifier'],
-          ],
-        },
-      };
+      // ctrl + s 刷新
+      this.editor.onKeyDown(e => {
+        if (e.keyCode === 49 && (e.metaKey || e.ctrlKey)) {
+          this.runCode()
+        }
+      })
 
-      // 注册 Vue 语言
-      monaco.languages.register({ id: 'vue' });
-
-      // 设置 Vue 语言的词法分析器
-      monaco.languages.setMonarchTokensProvider('vue', languageDefinition);
-
-      // 设置 Vue 语言的特性和行为
-      monaco.languages.setLanguageConfiguration('vue', {
-        brackets: [['{', '}'], ['[', ']'], ['(', ')']],
-        autoClosingPairs: [
-          { open: '<', close: '>' },
-          { open: "'", close: "'", notIn: ['string'] },
-          { open: '"', close: '"', notIn: ['string'] },
-        ],
-        indentationRules: {
-          increaseIndentPattern: /<(\w+)[^>]*>(?!<\/\1>|<!--\s*\[CDATA\[.*?\]\]-->)$/,
-          decreaseIndentPattern: /^<\/(\w+)[^>]*>$/,
-        },
-      });
-      // // 配置高亮显示
-      // monaco.editor.defineTheme('vue-theme', {
-      //   base: 'vs',
-      //   inherit: true,
-      //   rules: [
-      //     { token: 'tag', foreground: 'blue' }, // 标签颜色为蓝色
-      //     { token: 'expression', foreground: 'green' }, // 表达式颜色为绿色
-      //     { token: 'string', foreground: 'red' }, // 字符串颜色为红色
-      //   ],
-      // });
-      // 设置 Monaco Editor 的语言
-      this.editor.getModel().setMode('vue');
-      // monaco.editor.setTheme('vue-theme');
     }
   }
 };
