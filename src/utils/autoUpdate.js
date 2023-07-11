@@ -32,7 +32,7 @@ async function needUpdate() {
   lastSrcs = newScripts;
   return result;
 }
-const timeData = 2000;//检查间隔时间
+const timeData = 1000*10;//检查间隔时间
 
 function autRef() {
   setTimeout(async () => {

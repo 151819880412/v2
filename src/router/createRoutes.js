@@ -11,6 +11,8 @@ const RoutingJump = () => import('@/views/router/routingJump/routingJump.vue');
 const ComProps = () => import('@/views/com/comProps/comProps.vue');
 const ComSlot = () => import('@/views/com/comSlot/comSlot.vue');
 const ComMixin = () => import('@/views/com/comMixin/comMixin.vue');
+const ComTest = () => import('@/views/com/comTest/comTest.vue');
+
 const Directives = () => import('@/views/com/directives/directives.vue');
 const DefineProperty = () => import('@/views/defineProperty/defineProperty.vue');
 const WatchComputed = () => import('@/views/base/WatchComputed.vue');
@@ -142,7 +144,8 @@ export default () => {
             {
               path: '/com/comTest',
               name: 'comTest',
-              component: createApp(),
+              // component: createApp(),
+              component: ComTest,
               meta: {
                 title: '动态组件测试',
                 dynamic: true,

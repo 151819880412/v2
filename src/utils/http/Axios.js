@@ -5,6 +5,7 @@ import { isFunction } from '@/utils/is';
 import { omit } from 'lodash';
 import { ContentTypeEnum, RequestEnum } from '@/enums/httpEnum';
 import { globSetting } from './index';
+import { Message } from 'element-ui';
 
 
 class VAxios {
@@ -92,6 +93,13 @@ class VAxios {
   }
 
   async uploadFile(config, params) {
+    if(params.file){
+      const is100M = params.file.size / 1024 / 1024 > 100;
+      if (is100M) {
+        Message.error('上传文件大小不能超过 100MB!');
+        return false;
+      }
+    }
     const formData = new FormData();
 
     if (params.data) {
