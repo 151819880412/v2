@@ -156,7 +156,7 @@ const transform = {
     if (code == 30001) {
       TokenInvalid = true;
       router.replace({
-        path: '/logi1n'
+        path: '/login'
       });
     }
 

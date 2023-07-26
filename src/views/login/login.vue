@@ -1,8 +1,8 @@
 <template>
   <div class='login'>
     <el-form :model="loginFormData" :rules="loginRules" ref="loginForm" label-width="100px" class="demo-loginFormData">
-      <el-form-item label="用户名" prop="username">
-        <el-input v-model="loginFormData.username"></el-input>
+      <el-form-item label="用户名" prop="userName">
+        <el-input v-model="loginFormData.userName"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
         <el-input v-model="loginFormData.password" type="password"></el-input>
@@ -27,11 +27,11 @@ export default {
   data() {
     return {
       loginFormData: {
-        username: "admin",
+        userName: "admin",
         password: "123456"
       },
       loginRules: {
-        username: [
+        userName: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
           { min: 3, max: 9, message: '长度在 3 到 9 个字符', trigger: 'blur' }
         ],
@@ -58,7 +58,7 @@ export default {
       this.$refs.loginForm.validate(async valid => {
         if (valid) {
           let { data } = await login({
-            username: this.loginFormData.username,
+            userName: this.loginFormData.userName,
             password: this.loginFormData.password
           });
           // 假设这是后端返回的路由

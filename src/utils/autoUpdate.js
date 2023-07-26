@@ -1,10 +1,14 @@
-//请求首页
 let lastSrcs; // 存储路径
 const scriptReg = /<script.*?src="(.*?)"/g; // 解析请求回来的html值
-async function getScripts() {
+let isUpdating = false; // 是否正在更新
+const timeData = 1000 * 60; // 检查间隔时间
 
-  const html = await fetch('/?timestep=' + Date.now()).then((res) => res.text());
-  scriptReg.lastIndex = 0;// 正则分析页面所有url地址
+function fetchHTML() {
+  return fetch('/?timestep=' + Date.now()).then((res) => res.text());
+}
+
+async function getScripts(html) {
+  scriptReg.lastIndex = 0;
   const result = [];
   let match;
 
@@ -13,38 +17,46 @@ async function getScripts() {
   }
   return result;
 }
+
 async function needUpdate() {
-  const newScripts = await getScripts();//调用newScripts
-  if (!lastSrcs) {//如果之前没有保存页面js地址的话，进行一次保存，初始化并存下当前数据
+  const newHtml = await fetchHTML();
+  const newScripts = await getScripts(newHtml);
+
+  if (!lastSrcs) {
     lastSrcs = newScripts;
     return false;
   }
-  let result = false;
-  if (lastSrcs.length !== newScripts.length) {
-    result = true;
+
+  if (lastSrcs.length !== newScripts.length || !lastSrcs.every((src, i) => src === newScripts[i])) {
+    lastSrcs = newScripts;
+    return true;
   }
-  for (let i = 0; i < lastSrcs.length; i++) {
-    if (lastSrcs[i] !== newScripts[i]) {
-      result = true;
-      break;
-    }
-  }
-  lastSrcs = newScripts;
-  return result;
+
+  return false;
 }
-const timeData = 1000*10;//检查间隔时间
 
 function autRef() {
-  setTimeout(async () => {
-    const willUp = await needUpdate();//调用检查更新函数
-    if (willUp) {
-      const result = confirm('数据更新点击确认刷新当前页');
-      if (result) {
-        location.reload();//刷新当前页
+  if (isUpdating) return; // 如果正在更新，则不重复执行
+
+  isUpdating = true;
+  needUpdate()
+    .then((willUp) => {
+      isUpdating = false;
+
+      if (willUp) {
+        const result = confirm('数据更新点击确认刷新当前页');
+        if (result) {
+          location.reload(); // 刷新当前页
+        }
       }
-    };
-    autRef();
-  }, timeData);
+    })
+    .catch((error) => {
+      isUpdating = false;
+      console.error('Error during update check:', error);
+    })
+    .finally(() => {
+      setTimeout(autRef, timeData); // 间隔后再次执行
+    });
 }
 
 autRef();

@@ -66,7 +66,7 @@ router.beforeEach(async (to, from, next) => {
   // http://localhost:8080/home?role=admin
   if (to.fullPath.indexOf('role=admin') > -1) {
     let { data } = await login({
-      username: 'admin',
+      userName: 'admin',
       password: '123456'
     });
     // 假设这是后端返回的路由

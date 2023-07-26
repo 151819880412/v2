@@ -1,10 +1,9 @@
 <template>
-  <div class='home'>home
-    <test/>
+  <div class='home'>
+    home
   </div>
 </template>
 <script>
-import test from '../router/test/test.vue';
 
 export default {
   name: 'home',
@@ -22,7 +21,6 @@ export default {
   },
   watch: {},
   components: {
-    test
   },
   beforeDestroy() { }
 };

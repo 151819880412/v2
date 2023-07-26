@@ -1,6 +1,5 @@
 const AppLayout = () => import('@/views/layout/AppLayout.vue');
 const Home = () => import('@/views/home/home.vue');
-const RouterTest = () => import('@/views/router/test/test.vue');
 const notFound = () => import('@/views/notFound/notFound.vue');
 
 export const LoginRoute = {

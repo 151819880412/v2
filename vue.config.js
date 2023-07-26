@@ -25,7 +25,8 @@ module.exports = {
     resolve: {
       alias: {
         'vue$': 'vue/dist/vue.esm.js' // 确保使用包含编译器的构建
-      }
+      },
+      extensions: ['*', '.js', '.vue', '.json']
     },
     plugins: [
       new MonacoWebpackPlugin({
@@ -34,6 +35,24 @@ module.exports = {
     ]
   },
   chainWebpack: config => {
+    // 添加对Vue文件的处理规则
+    config.module
+      .rule('vue')
+      .test(/\.vue$/)
+      .use('vue-loader')
+      .loader('vue-loader')
+      .end();
+
+    // 添加JavaScript文件的处理规则
+    config.module
+      .rule('js')
+      .test(/\.js$/)
+      .exclude.add(/node_modules/)
+      .end()
+      .use('babel-loader')
+      .loader('babel-loader')
+      .end();
+
     config.module
       .rule('svg')
       .exclude.add(path.resolve('src/assets/icons'))
@@ -50,5 +69,5 @@ module.exports = {
         symbolId: 'icon-[name]'
       })
       .end();
-  }
+  },
 };
