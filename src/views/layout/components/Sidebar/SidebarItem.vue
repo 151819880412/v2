@@ -6,7 +6,7 @@
   <div class="menu-container">
     <template v-for="item in menuList">
       <el-submenu :index="item.path"
-        v-if="item.children && item.children.length > 0 && item.meta && !item.meta.hideChildrenInMenu" :key="item.path">
+        v-if="item.children && item.children.length > 0 && item.meta && !item.meta.hideChildrenInMenu" :key="item.id">
         <template slot="title">
           <i style="font-size: 20px; padding: 0 8px" class="iconfont" :class="item.meta.icon"></i>
           <span>{{ item.meta.title }}</span>
@@ -15,7 +15,7 @@
           <sidebar-item :menuList="item.children"></sidebar-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item :key="item.path" :index="item.path" @click="gotoRoute(item)" v-else>
+      <el-menu-item :key="item.id" :index="item.path" @click="gotoRoute(item)" v-else>
         <i style="font-size: 20px; padding: 0 8px" class="iconfont" :class="item.meta.icon"></i>
         <span slot="title">{{ item.meta.title }}</span>
       </el-menu-item>

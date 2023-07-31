@@ -49,6 +49,27 @@ export default {
   },
   computed: {},
   methods: {
+    transMenu(data) {
+      if (!data || data.length === 0) {
+        return;
+      }
+      for (let i = 0; i < data.length; i++) {
+        const item = data[i];
+        if (item.children && item.children.length > 0) {
+          this.transMenu(item.children);
+        }
+        const items = JSON.parse(JSON.stringify(item))
+        items.children  = undefined
+        item.meta = {
+          dynamic:true,
+          title:item.menuName,
+          ...items
+        };
+        item.path = item.routerPath;
+        item.name = item.componentName;
+        item.component = () => import(item.componentPath);
+      }
+    },
     cancel() {
       const axiosCanceler = new AxiosCanceler();
       axiosCanceler.removeAllPending();
@@ -62,10 +83,15 @@ export default {
             password: this.loginFormData.password
           });
           // 假设这是后端返回的路由
-          const menu = await createRoutes();
+          // let menu = await createRoutes();
+          let menu = []
           // 默认显示主页
           menu.unshift(HomeRoute);
+          // 这是真的路由
+          console.log(this.transMenu(data.user.menus));
+          menu = data.user.menus.concat(menu)
           data.menu = menu;
+          console.log(data);
           this.$store.dispatch('setUserInfo', data);
           this.$router.push('/home');
         }

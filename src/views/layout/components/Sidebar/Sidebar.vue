@@ -20,6 +20,7 @@ export default {
   },
   created() { },
   mounted() {
+    this.defaultActive = this.$route.path;
   },
   computed: {
     ...mapGetters({

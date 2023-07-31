@@ -9,6 +9,9 @@ import { login } from '@/api/login';
 import { PageEnum } from '@/enums/pageEnum';
 import TestRouter from './testRouter';
 
+// const routes = await createRoutes();
+const routes = store?.getters?.getUserInfo?.user?.menus || []
+
 const LOGIN_PATH = PageEnum.BASE_LOGIN;
 const whitePathList = [LOGIN_PATH];
 // VueRouter只会匹配符合规则的第一个路由,所以正则匹配的页面需要放在最后面
@@ -70,10 +73,9 @@ router.beforeEach(async (to, from, next) => {
       password: '123456'
     });
     // 假设这是后端返回的路由
-    const menu = await createRoutes();
     // 默认显示主页
-    menu.unshift(HomeRoute);
-    data.menu = menu;
+    routes.unshift(HomeRoute);
+    data.routes = routes;
     store.dispatch('setUserInfo', data);
     next(to.path);
   }
@@ -106,7 +108,6 @@ router.beforeEach(async (to, from, next) => {
   }
 
   // 构建路由
-  const routes = await createRoutes();
   // 待解决  动态路由添加到了最后面(可能是v2和v3版本导致的)
   // routes.forEach((route) => {
   //   if (router.getRoutes().filter(item2 => item2.name == route.name).length == 0) {
