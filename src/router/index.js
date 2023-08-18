@@ -9,8 +9,8 @@ import { login } from '@/api/login';
 import { PageEnum } from '@/enums/pageEnum';
 import TestRouter from './testRouter';
 
-// const routes = await createRoutes();
-const routes = store?.getters?.getUserInfo?.user?.menus || []
+// let routes = await createRoutes();
+let routes = store?.getters?.getUserInfo?.user?.menus || [];
 
 const LOGIN_PATH = PageEnum.BASE_LOGIN;
 const whitePathList = [LOGIN_PATH];
@@ -54,6 +54,7 @@ VueRouter.prototype.push = function push(location, onResolve, onReject) {
  * @returns {any}
  */
 router.beforeEach(async (to, from, next) => {
+  routes = store?.getters?.getUserInfo?.user?.menus || [];
   if (to.path === from.path) {
     return; // 取消导航
   }

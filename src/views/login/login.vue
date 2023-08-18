@@ -58,16 +58,20 @@ export default {
         if (item.children && item.children.length > 0) {
           this.transMenu(item.children);
         }
-        const items = JSON.parse(JSON.stringify(item))
-        items.children  = undefined
+        const items = JSON.parse(JSON.stringify(item));
+        items.children = undefined;
         item.meta = {
-          dynamic:true,
-          title:item.menuName,
+          dynamic: true,
+          title: item.menuName,
           ...items
         };
         item.path = item.routerPath;
         item.name = item.componentName;
-        item.component = () => import(item.componentPath);
+        if (item.componentName == 'AppLayout') {
+          item.component = () => import('@/views/layout/AppLayout.vue');
+        } else {
+          item.component = () => import(`@/views${item.componentPath}`);
+        }
       }
     },
     cancel() {
@@ -84,14 +88,13 @@ export default {
           });
           // 假设这是后端返回的路由
           // let menu = await createRoutes();
-          let menu = []
+          let menu = [];
           // 默认显示主页
           menu.unshift(HomeRoute);
           // 这是真的路由
-          console.log(this.transMenu(data.user.menus));
+          this.transMenu(data.user.menus);
           menu = data.user.menus.concat(menu)
           data.menu = menu;
-          console.log(data);
           this.$store.dispatch('setUserInfo', data);
           this.$router.push('/home');
         }

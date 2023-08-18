@@ -6,12 +6,16 @@ import { isString } from '@/utils/is';
 import { Message } from 'element-ui';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-import app from '@/main';
 import router from '@/router';
 import { AxiosRetry } from './axiosRetry';
 import { joinTimestamp, formatRequestDate } from './helper';
 import { setObjToUrlParams } from '@/utils/index';
 import store from '@/store/index';
+
+let loadingInstance
+import('@/main').then((module) => {
+ loadingInstance = module.default?.$Loading;
+});
 
 export const globSetting = {
   title: 1,
@@ -21,7 +25,6 @@ export const globSetting = {
   uploadUrl: 1,
 };
 const urlPrefix = globSetting.urlPrefix;
-const loadingInstance = app?.$Loading;
 let TokenInvalid = false;
 
 /**
@@ -67,7 +70,9 @@ const transform = {
       return data;
     }
 
-    throw new Error('transformRequestHook 拦截错误---' + message);
+    // throw new Error('transformRequestHook 拦截错误---' + message);
+    return Promise.reject('transformRequestHook 拦截错误---' + message);
+    
   },
 
   /**
@@ -192,7 +197,8 @@ const transform = {
         Message.error(response.data.message);
         break;
     }
-    throw new Error('responseInterceptorsCatch 拦截错误---' + error);
+    // throw new Error('responseInterceptorsCatch 拦截错误---' + error);
+    return Promise.reject('responseInterceptorsCatch 拦截错误---' + error);
 
   },
 };
@@ -236,7 +242,7 @@ function createAxios(_opt) {
         urlPrefix: urlPrefix,
         // 是否加入时间戳
         joinTime: true,
-        // 忽略重复请求
+        // 是否禁止重复请求
         ignoreCancelToken: true,
         // 是否携带token
         withToken: true,

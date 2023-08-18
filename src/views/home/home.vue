@@ -1,10 +1,11 @@
 <template>
   <div class='home'>
     home
+    <Theme />
   </div>
 </template>
 <script>
-
+import Theme from '@/components/Theme/theme.vue';
 export default {
   name: 'home',
   props: {},
@@ -21,6 +22,7 @@ export default {
   },
   watch: {},
   components: {
+    Theme
   },
   beforeDestroy() { }
 };

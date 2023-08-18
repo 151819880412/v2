@@ -1,6 +1,6 @@
 <template>
   <div class="common-layout">
-    <el-container class="common-container">
+    <el-container class="common-container" v-if="fullScreen">
       <el-aside width="200px">
         <SidebarNav />
       </el-aside>
@@ -15,6 +15,7 @@
         </el-scrollbar>
       </el-container>
     </el-container>
+    <PageLayout v-else />
   </div>
 </template>
 
@@ -27,7 +28,9 @@ export default {
   name: 'AppLayout',
   props: {},
   data() {
-    return {};
+    return {
+      fullScreen: this.$route?.meta?.showMe?.fullScreen || true
+    };
   },
   created() { },
   mounted() {

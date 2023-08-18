@@ -1,23 +1,31 @@
-
+let dragDom;
+let isFullScreen;
+let reactiveParam;
+let dialogHeaderEl;
+//当前宽高
+let nowWidth = 0;
+let nowHight = 0;
+//当前顶部高度
+let nowMarginTop = 0;
+let moveDown;
 export default {
   install(Vue, vm) {
     // 对象全局自定义指令
     Vue.directive('dialogDrag', {
       bind(el, binding, vnode, oldVnode) {
+        // 使用Vue.observable将参数转换为响应式对象
+        reactiveParam = Vue.observable(binding.value);
         //弹框可拉伸最小宽高
         let minWidth = 400;
         let minHeight = 300;
         //初始非全屏
-        let isFullScreen = false;
-        //当前宽高
-        let nowWidth = 0;
-        let nowHight = 0;
-        //当前顶部高度
-        let nowMarginTop = 0;
+        isFullScreen = reactiveParam.fullscreenMode;
+
+
         //获取弹框头部（这部分可双击全屏）
-        const dialogHeaderEl = el.querySelector('.el-dialog__header');
+        dialogHeaderEl = el.querySelector('.el-dialog__header');
         //弹窗
-        const dragDom = el.querySelector('.el-dialog');
+        dragDom = el.querySelector('.el-dialog');
         //给弹窗加上overflow auto；不然缩小时框内的标签可能超出dialog；
         dragDom.style.overflow = 'auto';
         //清除选择头部文字效果
@@ -28,7 +36,7 @@ export default {
         // 获取原有属性 ie dom元素.currentStyle 火狐谷歌 window.getComputedStyle(dom元素, null);
         const sty = dragDom.currentStyle || window.getComputedStyle(dragDom, null);
 
-        let moveDown = (e) => {
+        moveDown = (e) => {
           // 鼠标按下，计算当前元素距离可视区的距离
           const disX = e.clientX - dialogHeaderEl.offsetLeft;
           const disY = e.clientY - dialogHeaderEl.offsetTop;
@@ -87,30 +95,32 @@ export default {
         };
         dialogHeaderEl.onmousedown = moveDown;
         //双击头部效果
-        dialogHeaderEl.ondblclick = (e) => {
-          if (isFullScreen == false) {
-            nowHight = dragDom.clientHeight;
-            nowWidth = dragDom.clientWidth;
-            nowMarginTop = dragDom.style.marginTop;
-            dragDom.style.left = 0;
-            dragDom.style.top = 0;
-            dragDom.style.height = '100%';
-            dragDom.style.width = '100%';
-            dragDom.style.marginTop = 0;
-            dragDom.style.marginBottom = 0;
-            isFullScreen = true;
-            dialogHeaderEl.style.cursor = 'initial';
-            dialogHeaderEl.onmousedown = null;
-          } else {
-            dragDom.style.height = 'auto';
-            dragDom.style.width = nowWidth + 'px';
-            dragDom.style.marginTop = nowMarginTop;
-            dragDom.style.marginBottom = 0;
-            isFullScreen = false;
-            dialogHeaderEl.style.cursor = 'move';
-            dialogHeaderEl.onmousedown = moveDown;
-          }
-        };
+        // dialogHeaderEl.ondblclick = (e) => {
+        //   if (isFullScreen == false) {
+        //     nowHight = dragDom.clientHeight;
+        //     nowWidth = dragDom.clientWidth;
+        //     nowMarginTop = dragDom.style.marginTop;
+        //     dragDom.style.left = 0;
+        //     dragDom.style.top = 0;
+        //     dragDom.style.height = '100%';
+        //     dragDom.style.width = '100%';
+        //     dragDom.style.marginTop = 0;
+        //     dragDom.style.marginBottom = 0;
+        //     isFullScreen = true;
+        //     reactiveParam = true;
+        //     dialogHeaderEl.style.cursor = 'initial';
+        //     dialogHeaderEl.onmousedown = null;
+        //   } else {
+        //     dragDom.style.height = 'auto';
+        //     dragDom.style.width = nowWidth + 'px';
+        //     dragDom.style.marginTop = nowMarginTop;
+        //     dragDom.style.marginBottom = 0;
+        //     isFullScreen = false;
+        //     reactiveParam = false;
+        //     dialogHeaderEl.style.cursor = 'move';
+        //     dialogHeaderEl.onmousedown = moveDown;
+        //   }
+        // };
 
         //拉伸
         let resizeEl = document.createElement('div');
@@ -147,6 +157,37 @@ export default {
           };
         };
       },
+      update(el, binding) {
+        const newParam = binding.value;
+        const oldParam = binding.oldValue;
+        // 在update钩子中检测值的变化，类似于watch的立即触发
+        if (newParam !== oldParam) {
+          if (newParam) {
+            nowHight = dragDom.clientHeight;
+            nowWidth = dragDom.clientWidth;
+            nowMarginTop = dragDom.style.marginTop;
+            dragDom.style.left = 0;
+            dragDom.style.top = 0;
+            dragDom.style.height = '100%';
+            dragDom.style.width = '100%';
+            dragDom.style.marginTop = 0;
+            dragDom.style.marginBottom = 0;
+            isFullScreen = true;
+            reactiveParam = true;
+            dialogHeaderEl.style.cursor = 'initial';
+            dialogHeaderEl.onmousedown = null;
+          } else {
+            dragDom.style.height = 'auto';
+            dragDom.style.width = nowWidth + 'px';
+            dragDom.style.marginTop = nowMarginTop;
+            dragDom.style.marginBottom = 0;
+            isFullScreen = false;
+            reactiveParam = false;
+            dialogHeaderEl.style.cursor = 'move';
+            dialogHeaderEl.onmousedown = moveDown;
+          }
+        }
+      }
     });
 
   }

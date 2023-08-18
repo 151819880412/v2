@@ -93,7 +93,7 @@ class VAxios {
   }
 
   async uploadFile(config, params) {
-    if(params.file){
+    if (params.file) {
       const is100M = params.file.size / 1024 / 1024 > 100;
       if (is100M) {
         Message.error('上传文件大小不能超过 100MB!');
