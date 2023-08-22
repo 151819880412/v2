@@ -86,7 +86,6 @@ function buildListeners(scheme) {
 }
 
 function setValue(event, config, scheme) {
-  console.log(event, config, scheme);
   this.$set(config, 'defaultValue', event);
   this.$set(this.formData, scheme.prop, event);
 }

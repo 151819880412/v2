@@ -77,7 +77,6 @@ export default {
       this.dialogMaskFormData = _.cloneDeep(data.dialogMaskFormProps) || {};
       this.formDatas = _.cloneDeep(data.formData) || {};
       this.dialogVisible = true;
-      console.log(JSON.parse(JSON.stringify(this.dialogMaskFormData)),this.formDatas)
     },
     handleFullscreen() {
       this.fullscreenMode = !this.fullscreenMode;

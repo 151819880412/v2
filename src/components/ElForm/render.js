@@ -23,7 +23,6 @@
 
 // function mountSlotFiles(h, confClone, children) {
 //   const childObjs = componentChild[confClone.component]
-//   console.log(childObjs,confClone, children)
 //   if (childObjs) {
 //     Object.keys(childObjs).forEach(key => {
 //       const childFunc = childObjs[key]

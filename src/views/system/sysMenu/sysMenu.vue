@@ -451,7 +451,6 @@ export default {
      * @returns {any}
      */
     async delTemp(row) {
-      console.log(row);
       this.$confirm('是否确认删除?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

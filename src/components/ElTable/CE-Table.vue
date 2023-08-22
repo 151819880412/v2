@@ -146,7 +146,6 @@ export default {
         this.$emit('add');
       } catch (error) {
         this.$message.error('缺少add方法');
-        console.error('缺少add方法');
       }
     },
     fixeds(row, type) {

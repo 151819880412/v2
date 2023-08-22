@@ -55,7 +55,6 @@ export default {
           const newStyle = this.updateStyle(this[variable], originalCluster, themeCluster)
 
           let styleTag = document.getElementById(id)
-          // console.log(styleTag,newStyle, originalCluster, themeCluster,this[variable])
           if (!styleTag) {
             styleTag = document.createElement('style')
             styleTag.setAttribute('id', id)
@@ -114,7 +113,6 @@ export default {
 
     getCSSString (url, callback, variable) {
       const xhr = new XMLHttpRequest()
-      console.log(xhr)
       xhr.onreadystatechange = () => {
         if (xhr.readyState === 4 && xhr.status === 200) {
           this[variable] = xhr.responseText.replace(/@font-face{[^}]+}/, '')
