@@ -1,6 +1,6 @@
 <template>
   <div class="common-layout">
-    <el-container class="common-container" v-if="fullScreen">
+    <el-container class="common-container" v-if="fullScreen == false">
       <el-aside width="200px">
         <SidebarNav />
       </el-aside>
@@ -28,19 +28,22 @@ export default {
   name: 'AppLayout',
   props: {},
   data() {
-    return {
-      fullScreen: this.$route?.meta?.showMe?.fullScreen || true
-    };
+    return {};
   },
   created() { },
-  mounted() {
+  mounted() { },
+  computed: {
+    fullScreen() {
+      return this.$route?.meta?.fullScreen == 1 ? true : false;
+    },
   },
-  computed: {},
   methods: {
     // 组件内部的滚动条回到原点
     scrollToTop() {
       this.$nextTick(() => {
-        this.$refs.scrollbar.wrap.scrollTop = 0;
+        if(this.$refs.scrollbar){
+          this.$refs.scrollbar.wrap.scrollTop = 0;
+        }
       });
     }
   },

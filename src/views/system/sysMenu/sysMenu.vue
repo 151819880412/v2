@@ -271,6 +271,43 @@ export default {
           },
           {
             "__config__": {
+              "label": "是否全屏",
+              "labelWidth": null,
+              "showLabel": true,
+              "tag": "el-radio-group",
+              "tagIcon": "radio",
+              "changeTag": true,
+              "defaultValue": 0,
+              "layout": "colFormItem",
+              "span": 11,
+              "offset": 0,
+              "optionType": "default",
+              "regList": [],
+              "required": true,
+              "border": false,
+              "document": "https://element.eleme.cn/#/zh-CN/component/radio",
+              "formId": 1,
+              "renderKey": "11692692335486"
+            },
+            "__slot__": {
+              "options": [
+                {
+                  "label": "否",
+                  "value": 0
+                },
+                {
+                  "label": "是",
+                  "value": 1
+                }
+              ]
+            },
+            "style": {},
+            "size": "medium",
+            "disabled": false,
+            "__vModel__": "fullScreen"
+          },
+          {
+            "__config__": {
               "label": "所属父级",
               "labelWidth": null,
               "showLabel": true,
