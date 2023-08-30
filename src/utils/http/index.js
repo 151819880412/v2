@@ -11,10 +11,11 @@ import { AxiosRetry } from './axiosRetry';
 import { joinTimestamp, formatRequestDate } from './helper';
 import { setObjToUrlParams } from '@/utils/index';
 import store from '@/store/index';
+import { refresh } from '@/api/login';
 
-let loadingInstance
+let loadingInstance;
 import('@/main').then((module) => {
- loadingInstance = module.default?.$Loading;
+  loadingInstance = module.default?.$Loading;
 });
 
 export const globSetting = {
@@ -65,14 +66,14 @@ const transform = {
     // 不返回code，根据统一处理
     // 服务器返回成功code 200 / 20000 都是成功
     const hasSuccess =
-      data && Reflect.has(data, 'code') && (code === ResultEnum.SUCCESS || code === 20000 || code === 20001);
+      data && Reflect.has(data, 'code') && (code === ResultEnum.SUCCESS || code === 20000 || code === 20001 || code === 30001 || code === 40001);
     if (hasSuccess) {
       return data;
     }
 
     // throw new Error('transformRequestHook 拦截错误---' + message);
     return Promise.reject('transformRequestHook 拦截错误---' + message);
-    
+
   },
 
   /**
@@ -136,8 +137,7 @@ const transform = {
     loadingInstance?.showLoading();
     NProgress.start();
     // 请求之前处理config
-
-    const { accessToken, refreshToken } = store.getters.getToken
+    const { accessToken, refreshToken,num } = store.state.user.userInfo
     if (accessToken && (config)?.requestOptions?.withToken !== false) {
       config.headers.Authorization = options.authenticationScheme
         ? `${options.authenticationScheme} ${accessToken}`
@@ -154,15 +154,30 @@ const transform = {
   /**
    * @description: 响应拦截器处理
    */
-  responseInterceptors: (res) => {
+  responseInterceptors: async (axiosInstance,config, res) => {
     // console.log('响应拦截器处理', res);
     let { code } = res.data;
     const hasSuccess = (code === ResultEnum.SUCCESS || code === 20000 || code === 20001);
+
     if (code == 30001) {
-      TokenInvalid = true;
-      router.replace({
-        path: '/login'
-      });
+      if (!config.url.includes('/refresh')) {
+        const res1 = await refresh();
+        if (res1.code === 20000) {
+          store.dispatch('setToken',res1.data)
+          const retryRequest = new AxiosRetry();
+          config.requestOptions.retrtyCount = 1
+          let refreshData = await retryRequest.retry(axiosInstance, {config:config,response:""}).catch((err) => {
+            console.error(err)
+            // 重复请求的失败，防止多次调用新增错误日志的接口
+          });
+          return refreshData
+        } else {
+          TokenInvalid = true;
+          router.replace({
+            path: '/login'
+          });
+        }
+      }
     }
 
     loadingInstance?.hideLoading();
@@ -183,7 +198,6 @@ const transform = {
     NProgress.done();
 
     const { code, response } = error;
-    console.log(response);
     const retryRequest = new AxiosRetry();
     retryRequest.retry(axiosInstance, error).catch(() => {
       // 重复请求的失败，防止多次调用新增错误日志的接口
@@ -243,7 +257,7 @@ function createAxios(_opt) {
         // 是否加入时间戳
         joinTime: true,
         // 是否禁止重复请求
-        ignoreCancelToken: true,
+        ignoreCancelToken: false,
         // 是否携带token
         withToken: true,
         // 是否携带refreshToken

@@ -77,19 +77,19 @@ class VAxios {
       this.axiosInstance.interceptors.request.use(undefined, requestInterceptorsCatch);
 
     // 响应拦截器
-    this.axiosInstance.interceptors.response.use((res) => {
+    this.axiosInstance.interceptors.response.use(async (res) => {
       res && axiosCanceler.removePending(res.config);
       if (responseInterceptors && isFunction(responseInterceptors)) {
-        res = responseInterceptors(res);
+        res = responseInterceptors(this.axiosInstance,res.config,res);
       }
       return res;
     }, undefined);
-    this.axiosInstance.interceptors.response.use(undefined, (err) => {
-      if (responseInterceptorsCatch && isFunction(responseInterceptorsCatch)) {
-        err = responseInterceptorsCatch(this.axiosInstance, err);
-      }
-      return err;
-    });
+    // this.axiosInstance.interceptors.response.use(undefined, (err) => {
+    //   if (responseInterceptorsCatch && isFunction(responseInterceptorsCatch)) {
+    //     err = responseInterceptorsCatch(this.axiosInstance, err);
+    //   }
+    //   return err;
+    // });
   }
 
   async uploadFile(config, params) {

@@ -54,6 +54,9 @@ const user = {
     resetState({ commit, state },) {
       commit('resetState',);
     },
+    setToken({ commit, state },data){
+      commit('setToken',data);
+    }
   },
   // 不支持异步函数
   mutations: {
@@ -64,6 +67,13 @@ const user = {
     resetState(state) {
       // 重置状态为初始值
       Object.assign(state, initialState);
+    },
+    setToken(state,data) {
+      state.userInfo.accessToken = data.accessToken
+      state.userInfo.refreshToken = data.refreshToken
+      const userStr = localStorage.getItem('userInfo');
+      localStorage.setItem('userInfo', JSON.stringify(state.userInfo));
+
     },
   },
 
