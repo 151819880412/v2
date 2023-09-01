@@ -593,7 +593,7 @@ export const layoutComponents = [
       offset: 0,
       formId: 101,
       renderKey: 1595761764203,
-      componentName: 'row101',
+      // componentName: 'row101',
       showLabel: true,
       changeTag: true,
       labelWidth: null,
@@ -603,7 +603,19 @@ export const layoutComponents = [
       dataPath: 'list',
       dataConsumer: 'data',
       url: 'https://www.fastmock.site/mock/f8d7a54fb1e60561e2f720d5a810009d/fg/tableData',
-      children: [{
+      queryData:'{}',
+      children: [
+        {
+          label:"序号",
+          __config__: {
+            layout: 'raw',
+            tag: 'el-table-column',
+            type:'index',
+            width:"90",
+            renderKey: 15957617660153
+          },
+        },
+        {
         __config__: {
           layout: 'raw',
           tag: 'el-table-column',
@@ -652,15 +664,16 @@ export const layoutComponents = [
           ]
         },
         label: '操作'
-      }]
+      }
+    ]
     },
-    data: [],
-    directives: [{
-      name: 'loading',
-      value: true
-    }],
+    data: [{date:1}],
+    // directives: [{
+    //   name: 'loading',
+    //   value: true
+    // }],
     border: true,
-    type: 'default',
+    type: 'table',
     justify: 'start',
     align: 'top'
   }

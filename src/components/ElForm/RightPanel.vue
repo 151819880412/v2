@@ -288,9 +288,17 @@
                   </el-select>
                 </el-input>
               </el-form-item>
-              <el-form-item label="数据位置">
+              <!-- <el-form-item label="数据位置">
                 <el-input v-model="activeData.__config__.dataPath" placeholder="请输入数据位置"
                   @blur="$emit('fetch-data', activeData)" />
+              </el-form-item> -->
+              <el-form-item label="接口参数">
+                <el-input v-model="activeData.__config__.queryData" placeholder="请输入接口参数"
+                  @blur="$emit('fetch-data', activeData)" />
+              </el-form-item>
+              <el-form-item label="列设置">
+                <el-button style="padding-bottom: 0" icon="el-icon-circle-plus-outline" type="text" @click="addColumn">
+                </el-button>
               </el-form-item>
 
               <template v-if="activeData.props && activeData.props.props">
@@ -520,14 +528,17 @@
       </el-scrollbar>
     </div>
 
-    <treeNode-dialog :visible.sync="dialogVisible" title="添加选项" @commit="addNode" />
+    <treeNode-dialog :visible.sync="treeNodeDialogVisible" title="添加选项" @commit="addNode" />
+    <column-dialog :visible.sync="columnDialogVisible" :tableData="activeData.__config__.children" title="添加选项" @updateTableData="updateTableData"/>
+
     <icons-dialog :visible.sync="iconsVisible" :current="activeData[currentIconModel]" @select="setIcon" />
   </div>
 </template>
 
 <script>
 import TreeNodeDialog from './TreeNodeDialog';
-import { isNumberStr } from '@/utils/index';
+import ColumnDialog from './ColumnDialog'
+import { isNumberStr,isJSONString } from '@/utils/generator/index';
 import IconsDialog from './IconsDialog';
 import {
   inputComponents, selectComponents, layoutComponents, formConf
@@ -553,14 +564,16 @@ export default {
   components: {
     TreeNodeDialog,
     IconsDialog,
-    draggable
+    draggable,
+    ColumnDialog
   },
   props: ['showField', 'activeData', 'formConf'],
   data() {
     return {
       currentTab: 'field',
       currentNode: null,
-      dialogVisible: false,
+      treeNodeDialogVisible: false,
+      columnDialogVisible:false,
       iconsVisible: false,
       currentIconModel: null,
       dateTypeOptions: [
@@ -719,7 +732,7 @@ export default {
     },
     addTreeItem() {
       ++this.idGlobal;
-      this.dialogVisible = true;
+      this.treeNodeDialogVisible = true;
       this.currentNode = this.activeData.options;
     },
     renderContent(h, { node, data, store }) {
@@ -743,7 +756,7 @@ export default {
       if (!data.children) {
         this.$set(data, 'children', []);
       }
-      this.dialogVisible = true;
+      this.treeNodeDialogVisible = true;
       this.currentNode = data.children;
     },
     remove(node, data) {
@@ -755,6 +768,9 @@ export default {
     },
     addNode(data) {
       this.currentNode.push(data);
+    },
+    updateTableData(data){
+      this.$emit('updateTableConfig', data)
     },
     setOptionValue(item, val) {
       item.value = isNumberStr(val) ? +val : val;
@@ -768,6 +784,9 @@ export default {
       // }
       if (typeof val === 'boolean') {
         return `${val}`;
+      }
+      if(this.activeData.type=='table' && isJSONString(val)){
+        this.activeData.data = JSON.parse(val)
       }
       return val;
     },
@@ -850,6 +869,11 @@ export default {
       if (needRerenderList.includes(this.activeData.__config__.tag)) {
         this.activeData.__config__.renderKey = +new Date();
       }
+    },
+    // 列设置
+    addColumn(){
+      console.log(this.activeData)
+      this.columnDialogVisible = true
     }
   }
 };

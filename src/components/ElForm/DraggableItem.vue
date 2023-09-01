@@ -69,6 +69,7 @@ const layouts = {
     )
   },
   raw(h, currentItem, index, list) {
+    // console.log('raw-------------------',currentItem)
     const config = currentItem.__config__
     const child = renderChildren.apply(this, arguments)
     return <render key={config.renderKey} conf={currentItem} onInput={ event => {

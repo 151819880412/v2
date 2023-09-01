@@ -45,7 +45,7 @@
       <el-scrollbar class="center-scrollbar">
         <el-row class="center-board-row" :gutter="formConf.gutter">
           <el-form :size="formConf.size" :label-position="formConf.labelPosition" :disabled="formConf.disabled"
-            :label-width="formConf.labelWidth + 'px'">
+            :label-width="formConf.labelWidth + 'px'" :key="formKey">
             <draggable class="drawing-board" :list="drawingList" :animation="340" group="componentsGroup">
               <draggable-item v-for="(item, index) in drawingList" :key="item.renderKey" :drawing-list="drawingList"
                 :current-item="item" :index="index" :active-id="activeId" :form-conf="formConf"
@@ -59,8 +59,12 @@
       </el-scrollbar>
     </div>
 
+    <!-- <right-table v-if="activeData.__config__ && activeData.type == 'table'" :active-data="activeData" :form-conf="formConf"
+      :show-field="!!drawingList.length" @tag-change="tagChange" @fetch-data="fetchData" /> -->
+
     <right-panel v-if="activeData.__config__" :active-data="activeData" :form-conf="formConf"
-      :show-field="!!drawingList.length" @tag-change="tagChange" @fetch-data="fetchData" />
+      :show-field="!!drawingList.length" @tag-change="tagChange" @fetch-data="fetchData"
+      @updateTableConfig="updateTableConfig" />
 
     <form-drawer :visible.sync="drawerVisible" :form-data="formData" size="100%" :generate-conf="generateConf" />
 
@@ -81,9 +85,10 @@ import {
 } from '@/components/ElForm/config.js';
 import DraggableItem from '@/components/ElForm/DraggableItem.vue';
 import RightPanel from '@/components/ElForm/RightPanel.vue';
+import RightTable from '@/components/ElForm/RightTable.vue';
 import CodeTypeDialog from './CodeTypeDialog';
 import JsonDrawer from './JsonDrawer';
-import FormDrawer from './FormDrawer'
+import FormDrawer from './FormDrawer';
 import {
   makeUpHtml, vueTemplate, vueScript, cssStyle
 } from '@/components/generator/html';
@@ -100,6 +105,7 @@ export default {
   props: {},  // 外部传入的属性
   data() {
     return {
+      formKey: 0,
       activeData: {},  // 当前选中的组件数据
       activeId: null,  // 当前选中的组件 ID
       inputComponents,  // 输入型组件列表
@@ -189,7 +195,7 @@ export default {
     },
     activeFormItem(currentItem) {
       // 激活表单项
-      console.log(currentItem);  // 打印当前选中的组件数据
+      console.log(JSON.parse(JSON.stringify(currentItem)), JSON.parse(JSON.stringify(this.activeData)), this.key);  // 打印当前选中的组件数据
       this.activeData = currentItem;  // 设置当前激活的组件数据
       this.activeId = currentItem.__config__.formId;  // 设置当前激活的组件 ID
     },
@@ -232,6 +238,9 @@ export default {
     fetchData(val) {
       // 获取数据逻辑
       console.log(val);  // 打印传入的数据
+    },
+    updateTableConfig(data) {
+      this.formKey += 1;
     },
     run() {
       // 运行逻辑
@@ -319,6 +328,7 @@ export default {
     draggable,
     DraggableItem,
     RightPanel,
+    RightTable,
     CodeTypeDialog,
     JsonDrawer,
     FormDrawer,

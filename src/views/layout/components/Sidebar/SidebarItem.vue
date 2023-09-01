@@ -40,7 +40,11 @@ export default {
   },
   methods: {
     gotoRoute(row) {
-      this.$router.push(row.path);
+      if(row.path =='/system/formConf'){
+        window.open(row.path)
+      }else{
+        this.$router.push(row.path);
+      }
     }
   },
   mounted() {

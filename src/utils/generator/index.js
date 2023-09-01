@@ -39,6 +39,15 @@ export function isNumberStr(str) {
   return /^[+-]?(0|([1-9]\d*))(\.\d+)?$/g.test(str)
 }
 
+export function isJSONString(str) {
+  try {
+    JSON.parse(str)
+    return true
+  } catch (error) {
+    return false
+  }
+}
+
 export const exportDefault = 'export default '
 
 export const beautifierConf = {
